@@ -55,7 +55,6 @@ fun TaskList(){
     Surface {
         Column (
             modifier = Modifier
-                .padding(16.dp)
         ){
             Row(
                 verticalAlignment = Alignment.CenterVertically
