@@ -34,12 +34,12 @@ fun Login(modifier: Modifier = Modifier){
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ){
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(text = "Username", style = MaterialTheme.typography.labelLarge)
                 TextField(value = "", onValueChange = {},  placeholder = {Text("Username")})
             }
 
-            Column {
+            Column (verticalArrangement = Arrangement.spacedBy(8.dp)){
                 Text(text = "Password", style = MaterialTheme.typography.labelLarge)
                 TextField(value = "Hello world", onValueChange = {}, visualTransformation = PasswordVisualTransformation())
             }
