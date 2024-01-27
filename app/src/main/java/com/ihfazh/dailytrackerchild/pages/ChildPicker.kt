@@ -57,7 +57,7 @@ fun ChildPicker(){
                 ProfileCard(
                     profile = profile,
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(16.dp)
                 )
             }
         }
