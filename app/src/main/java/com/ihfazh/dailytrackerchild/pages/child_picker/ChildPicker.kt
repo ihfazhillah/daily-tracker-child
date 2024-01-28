@@ -23,13 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ihfazh.dailytrackerchild.types.OnRetryClicked
 import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.OnProfileClicked
 import com.ihfazh.dailytrackerchild.components.ProfileCard
 import com.ihfazh.dailytrackerchild.components.ProfileItem
-
-
-typealias OnRetryClicked = () -> Unit
 
 
 @Composable

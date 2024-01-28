@@ -12,6 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -30,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.ihfazh.dailytrackerchild.R
 
 
-enum class TaskStatus {Todo, Pending, Finished}
+enum class TaskStatus {Todo, Pending, Finished, Processing, Error}
 
 
 data class Task(
@@ -52,12 +59,16 @@ fun TaskCard(
         TaskStatus.Todo -> Color.Red
         TaskStatus.Pending -> Color.Yellow
         TaskStatus.Finished -> Color.Green
+        TaskStatus.Processing -> Color.Gray
+        TaskStatus.Error -> Color.Red
     }
 
     val iconResourceId = when(task.status){
-        TaskStatus.Todo -> R.drawable.x_icon
-        TaskStatus.Pending -> R.drawable.circle
-        TaskStatus.Finished -> R.drawable.baseline_check_24
+        TaskStatus.Todo -> Icons.Default.FavoriteBorder
+        TaskStatus.Pending -> Icons.Default.Lock
+        TaskStatus.Finished -> Icons.Default.Favorite
+        TaskStatus.Processing -> Icons.Default.Info
+        TaskStatus.Error -> Icons.Default.Clear
     }
 
     Card (
@@ -94,14 +105,14 @@ fun TaskCard(
 
             ){
                 Icon(
-                    painter = painterResource(iconResourceId),
+                    iconResourceId,
                     contentDescription = "Sudah Selesai",
                     modifier = Modifier
                         .padding(5.dp)
                 )
             }
 
-            if (task.status == TaskStatus.Todo){
+            if ((task.status == TaskStatus.Todo) or (task.status == TaskStatus.Error)){
                 ElevatedButton(
                     onClick = {onTaskFinishClick.invoke(task.id)},
                     modifier = Modifier
@@ -121,6 +132,8 @@ fun TaskCardPreview(){
     val tasks = listOf<Task>(
         Task("1", "Sholat Subuh pada waktunya", TaskStatus.Finished),
         Task("2", "Mengerjakan PR Ustadz", TaskStatus.Pending),
+        Task("3", "Dot Isa pagi", TaskStatus.Error),
+        Task("3", "Dot Isa pagi", TaskStatus.Processing),
         Task("3", "Dot Isa pagi", TaskStatus.Todo),
     )
 
