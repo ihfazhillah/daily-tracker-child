@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPicker
+import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
 import com.ihfazh.dailytrackerchild.pages.login.IdleLoginState
 import com.ihfazh.dailytrackerchild.pages.login.Login
 import com.ihfazh.dailytrackerchild.pages.login.Submitting
@@ -28,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    TaskList()
-//                    ChildPicker()
-                    Login(IdleLoginState("Apa kabar ini error"))
+                    ChildPicker(Loading)
+//                    Login(("Apa kabar ini error"))
                 }
             }
         }

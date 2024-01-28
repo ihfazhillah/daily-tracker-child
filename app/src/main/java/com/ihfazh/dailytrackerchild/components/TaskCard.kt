@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -121,6 +123,10 @@ fun TaskCard(
                     Text(text = "Selesaikan")
                 }
             }
+
+            if (task.status == TaskStatus.Processing){
+                CircularProgressIndicator(Modifier.width(50.dp).height(50.dp))
+            }
         }
     }
 }
@@ -131,9 +137,9 @@ fun TaskCard(
 fun TaskCardPreview(){
     val tasks = listOf<Task>(
         Task("1", "Sholat Subuh pada waktunya", TaskStatus.Finished),
+        Task("3", "Dot Isa pagi", TaskStatus.Processing),
         Task("2", "Mengerjakan PR Ustadz", TaskStatus.Pending),
         Task("3", "Dot Isa pagi", TaskStatus.Error),
-        Task("3", "Dot Isa pagi", TaskStatus.Processing),
         Task("3", "Dot Isa pagi", TaskStatus.Todo),
     )
 
