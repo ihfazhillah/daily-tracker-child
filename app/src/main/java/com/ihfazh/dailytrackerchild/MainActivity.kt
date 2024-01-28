@@ -7,14 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ihfazh.dailytrackerchild.pages.ChildPicker
-import com.ihfazh.dailytrackerchild.pages.Login
-import com.ihfazh.dailytrackerchild.pages.TaskList
+import com.ihfazh.dailytrackerchild.pages.login.IdleLoginState
+import com.ihfazh.dailytrackerchild.pages.login.Login
+import com.ihfazh.dailytrackerchild.pages.login.Submitting
 import com.ihfazh.dailytrackerchild.ui.theme.DailyTrackerChildTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,25 +29,9 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    TaskList()
 //                    ChildPicker()
-                    Login()
+                    Login(IdleLoginState("Apa kabar ini error"))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DailyTrackerChildTheme {
-        Greeting("Android")
     }
 }

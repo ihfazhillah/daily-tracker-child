@@ -1,4 +1,4 @@
-package com.ihfazh.dailytrackerchild.pages
+package com.ihfazh.dailytrackerchild.pages.task_list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
