@@ -107,7 +107,8 @@ fun TaskList(
                             TaskCard(
                                 task = task,
                                 modifier = Modifier
-                                    .padding(12.dp)
+                                    .padding(12.dp),
+                                onTaskFinishClick = onTaskFinish
                             )
                         }
                     }
@@ -125,7 +126,7 @@ fun TaskList(
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        Button(onClick = { /*TODO*/ }) {
+                        Button(onClick = onRetryClicked) {
                             Icon(
                                 Icons.Rounded.Refresh,
                                 null

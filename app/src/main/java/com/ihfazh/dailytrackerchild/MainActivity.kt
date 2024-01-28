@@ -11,9 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPicker
 import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
-import com.ihfazh.dailytrackerchild.pages.login.IdleLoginState
-import com.ihfazh.dailytrackerchild.pages.login.Login
-import com.ihfazh.dailytrackerchild.pages.login.Submitting
 import com.ihfazh.dailytrackerchild.ui.theme.DailyTrackerChildTheme
 
 class MainActivity : ComponentActivity() {
