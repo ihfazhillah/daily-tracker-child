@@ -1,16 +1,13 @@
 package com.ihfazh.dailytrackerchild.pages.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -23,10 +20,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ihfazh.dailytrackerchild.components.ErrorMessage
 
 
 typealias OnLoginClicked = (username: String, password: String) -> Unit
@@ -57,15 +54,7 @@ fun Login(state: LoginState, modifier: Modifier = Modifier, onLoginClicked: OnLo
         Spacer(Modifier.height(40.dp))
 
         if ((state is IdleLoginState) && (state.error !== null)){
-            Text(
-                text = state.error,
-                color = MaterialTheme.colorScheme.onErrorContainer,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.errorContainer)
-                    .padding(16.dp)
-
-            )
+            ErrorMessage(state.error)
         }
         Spacer(Modifier.height(40.dp))
 

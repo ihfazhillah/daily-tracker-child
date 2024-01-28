@@ -1,9 +1,9 @@
 package com.ihfazh.dailytrackerchild.pages.login
 
-interface LoginState{}
+sealed interface LoginState{}
 data class IdleLoginState(
     val error: String?
 ): LoginState
 
 
-object Submitting: LoginState
+data object Submitting: LoginState
