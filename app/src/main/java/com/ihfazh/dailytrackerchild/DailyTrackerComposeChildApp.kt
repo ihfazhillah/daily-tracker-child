@@ -1,5 +1,6 @@
 package com.ihfazh.dailytrackerchild
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPicker
+import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPickerScreen
+import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPickerViewModel
 import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
 import com.ihfazh.dailytrackerchild.pages.login.LoginScreen
 import com.ihfazh.dailytrackerchild.pages.login.LoginViewModel
@@ -44,7 +47,16 @@ fun DailyTrackerNavHost(
         }
         
         composable("child-picker"){
-            ChildPicker(state = Loading)
+                ChildPickerScreen(
+                    viewModel = viewModel(factory = ChildPickerViewModel.Factory),
+                    onProfileClicked = {profile ->
+                        navController.navigate("task-list/${profile.id}")
+                    }
+                )
+        }
+
+        composable("task-list/{childId}"){ backStackEntry ->
+            Text(text = "Hello world ${backStackEntry.arguments?.getString("childId")}")
         }
 
     }
