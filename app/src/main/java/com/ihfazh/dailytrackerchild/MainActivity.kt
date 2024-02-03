@@ -9,13 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPicker
-import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
 import com.ihfazh.dailytrackerchild.ui.theme.DailyTrackerChildTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             DailyTrackerChildTheme {
                 // A surface container using the 'background' color from the theme
@@ -26,9 +26,10 @@ class MainActivity : ComponentActivity() {
                     ,
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    TaskList()
-                    ChildPicker(Loading)
-//                    Login(("Apa kabar ini error"))
+
+                    DailyTrackerComposeChildApp()
+
+
                 }
             }
         }

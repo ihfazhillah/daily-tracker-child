@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -62,7 +63,8 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.coil)
     implementation(libs.coil.compose)
-//    implementation(libs.coil-compose)
+    implementation(libs.viewmodel.compose)
+    implementation(libs.nav.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

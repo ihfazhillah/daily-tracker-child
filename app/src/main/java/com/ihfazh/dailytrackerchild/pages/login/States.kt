@@ -1,9 +1,18 @@
 package com.ihfazh.dailytrackerchild.pages.login
 
-sealed interface LoginState{}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+sealed interface LoginState
+
+@Parcelize
 data class IdleLoginState(
     val error: String?
-): LoginState
+): LoginState, Parcelable
 
 
-data object Submitting: LoginState
+@Parcelize
+data object Submitting: LoginState, Parcelable
+
+@Parcelize
+data object LoginSuccess: LoginState, Parcelable
