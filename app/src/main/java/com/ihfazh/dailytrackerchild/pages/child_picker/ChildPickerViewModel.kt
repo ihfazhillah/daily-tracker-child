@@ -23,6 +23,7 @@ class ChildPickerViewModel(
     val state = _state.asStateFlow()
 
     fun getChildren(){
+        println("get children kepanggil")
         _state.value = Loading
 
         viewModelScope.launch(Dispatchers.IO){
@@ -38,10 +39,6 @@ class ChildPickerViewModel(
             }
         }
 
-    }
-
-    init {
-        getChildren()
     }
 
     companion object {
