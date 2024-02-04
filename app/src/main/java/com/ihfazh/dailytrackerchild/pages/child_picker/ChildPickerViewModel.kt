@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.ihfazh.dailytrackerchild.ChildrenCache
+import com.ihfazh.dailytrackerchild.utils.ChildrenCache
 import com.ihfazh.dailytrackerchild.DailyTrackerChildApplication
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
@@ -23,7 +23,6 @@ class ChildPickerViewModel(
     val state = _state.asStateFlow()
 
     fun getChildren(){
-        println("get children kepanggil")
         _state.value = Loading
 
         viewModelScope.launch(Dispatchers.IO){

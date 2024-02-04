@@ -34,7 +34,6 @@ import com.ihfazh.dailytrackerchild.components.DateItem
 import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.HijriDateItem
 import com.ihfazh.dailytrackerchild.components.MyProgress
-import com.ihfazh.dailytrackerchild.components.OnProfileClicked
 import com.ihfazh.dailytrackerchild.components.ProfileItem
 import com.ihfazh.dailytrackerchild.components.Task
 import com.ihfazh.dailytrackerchild.components.TaskCard
@@ -57,10 +56,7 @@ fun TaskList(
 
     val user = state.profile.toChild()
 
-    val date = DateItem(
-        HijriDateItem(15, "Rajab", 1445),
-        "27 Januari 2024"
-    )
+    val date = state.dateItem
 
     val progress = if (state is Idle) {
         state.tasks.filter { it.status === TaskStatus.Finished}.size.toFloat() / state.tasks.size
@@ -179,9 +175,16 @@ fun TaskListPreview(){
         Task("6", "Sapu sapu rumah", TaskStatus.Todo),
         Task("6", "Sepedaan", TaskStatus.Todo),
     )
+    val date = DateItem(
+        HijriDateItem(15, "Rajab", 1445),
+        "27 Januari 2024"
+    )
 
-    TaskList(Loading(
-        ProfileItem("1", "url", "hello", 0.2F),
-    ),
-        onProfileClicked = {})
+    TaskList(
+        Loading(
+            ProfileItem("1", "url", "hello", 0.2F),
+            date
+        ),
+        onProfileClicked = {}
+    )
 }

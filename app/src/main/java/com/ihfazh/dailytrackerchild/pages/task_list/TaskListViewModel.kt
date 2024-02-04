@@ -10,6 +10,7 @@ import com.ihfazh.dailytrackerchild.components.TaskStatus
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
 import com.ihfazh.dailytrackerchild.remote.DummyClient
+import com.ihfazh.dailytrackerchild.utils.DateProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,10 +18,13 @@ import kotlinx.coroutines.launch
 
 class TaskListViewModel(
     private val client: DummyClient,
-    private val profileItem: ProfileItem
+    private val profileItem: ProfileItem,
+    dateProvider: DateProvider
 ): ViewModel(){
 
-    private val _state = MutableStateFlow<BaseState>(Loading(profileItem))
+    private val date = dateProvider.getDateItem()
+
+    private val _state = MutableStateFlow<BaseState>(Loading(profileItem, date))
     val state = _state.asStateFlow()
 
 
@@ -28,8 +32,8 @@ class TaskListViewModel(
         viewModelScope.launch(Dispatchers.IO){
             val response = client.getTaskList(profileItem.id)
             _state.value = when(response){
-                is Failure -> Error(profileItem, response.error.msg)
-                is Success -> Idle(profileItem, response.value.tasks)
+                is Failure -> Error(profileItem, date, response.error.msg)
+                is Success -> Idle(profileItem, date, response.value.tasks)
             }
         }
 
@@ -64,7 +68,8 @@ class TaskListViewModel(
                 val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]) as DailyTrackerChildApplication
                 return TaskListViewModel(
                     application.compositionRoot.client,
-                    profileItem
+                    profileItem,
+                    application.compositionRoot.dateProvider
                 ) as T
             }
         }

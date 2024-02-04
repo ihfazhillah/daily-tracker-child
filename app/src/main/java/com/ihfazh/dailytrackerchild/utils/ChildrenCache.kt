@@ -1,4 +1,4 @@
-package com.ihfazh.dailytrackerchild
+package com.ihfazh.dailytrackerchild.utils
 
 import android.content.SharedPreferences
 import com.ihfazh.dailytrackerchild.components.ProfileItem
