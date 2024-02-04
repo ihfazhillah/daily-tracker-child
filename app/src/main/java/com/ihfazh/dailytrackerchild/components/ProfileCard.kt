@@ -23,7 +23,9 @@ data class ProfileItem (
     val name: String,
     val avatarUrl: String,
     val progress: Float,
-)
+) {
+    companion object
+}
 
 
 typealias OnProfileClicked = (profile: ProfileItem) -> Unit

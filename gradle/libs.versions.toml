@@ -12,6 +12,7 @@ coil = "2.5.0"
 viewmodel-compose = "2.6.1"
 parcelize = "1.9.0"
 nav = "2.7.6"
+moshi = "1.15.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -32,6 +33,7 @@ coil-compose = { name = "coil-compose", group = "io.coil-kt", version.ref = "coi
 coil = { name = "coil", group = "io.coil-kt", version.ref = "coil"}
 viewmodel-compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodel-compose"}
 nav-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "nav"}
+moshi-kotlin = {group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

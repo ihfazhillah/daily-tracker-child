@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.ihfazh.dailytrackerchild.ChildrenCache
 import com.ihfazh.dailytrackerchild.DailyTrackerChildApplication
-import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
 import com.ihfazh.dailytrackerchild.remote.DummyClient
@@ -16,9 +16,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChildPickerViewModel(
-    private val client: DummyClient
+    private val client: DummyClient,
+    private val childrenCache: ChildrenCache
 ): ViewModel(){
-    var _state = MutableStateFlow<ChildState>(Loading)
+    private var _state = MutableStateFlow<ChildState>(Loading)
     val state = _state.asStateFlow()
 
     fun getChildren(){
@@ -28,6 +29,7 @@ class ChildPickerViewModel(
             val outcome = client.getChildren()
             _state.value = when(outcome){
                 is Success -> {
+                    childrenCache.saveProfiles(outcome.value.profiles)
                     Idle(outcome.value.profiles)
                 }
                 is Failure -> {
@@ -47,7 +49,10 @@ class ChildPickerViewModel(
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY]) as DailyTrackerChildApplication
-                return ChildPickerViewModel(application.compositionRoot.client) as T
+                return ChildPickerViewModel(
+                    application.compositionRoot.client,
+                    application.compositionRoot.childrenCache
+                ) as T
             }
         }
     }

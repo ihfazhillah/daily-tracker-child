@@ -6,6 +6,6 @@ class DailyTrackerChildApplication: Application() {
     lateinit var compositionRoot : ActivityCompositionRoot
     override fun onCreate() {
         super.onCreate()
-        compositionRoot = ActivityCompositionRoot()
+        compositionRoot = ActivityCompositionRoot(this)
     }
 }

@@ -17,6 +17,8 @@ import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPickerViewModel
 import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
 import com.ihfazh.dailytrackerchild.pages.login.LoginScreen
 import com.ihfazh.dailytrackerchild.pages.login.LoginViewModel
+import com.ihfazh.dailytrackerchild.pages.task_list.TaskListScreen
+import com.ihfazh.dailytrackerchild.pages.task_list.TaskListViewModel
 
 @Composable
 fun DailyTrackerComposeChildApp(){
@@ -56,7 +58,12 @@ fun DailyTrackerNavHost(
         }
 
         composable("task-list/{childId}"){ backStackEntry ->
-            Text(text = "Hello world ${backStackEntry.arguments?.getString("childId")}")
+            val childId = backStackEntry.arguments?.getString("childId") ?: return@composable  Text(text = "Hello world")
+            val childrenCache = (activity.application as DailyTrackerChildApplication).compositionRoot.childrenCache
+            val profile = childrenCache.getProfile(childId) ?: return@composable Text(text="Children not found")
+            TaskListScreen(
+                viewModel = viewModel(factory = TaskListViewModel.Factory(profile))
+            )
         }
 
     }
