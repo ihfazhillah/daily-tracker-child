@@ -1,23 +1,14 @@
 package com.ihfazh.dailytrackerchild
 
-import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsBuilder
-import androidx.navigation.NavOptionsDsl
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPicker
 import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPickerScreen
-import com.ihfazh.dailytrackerchild.pages.child_picker.ChildPickerViewModel
-import com.ihfazh.dailytrackerchild.pages.child_picker.Loading
 import com.ihfazh.dailytrackerchild.pages.login.LoginScreen
 import com.ihfazh.dailytrackerchild.pages.login.LoginViewModel
 import com.ihfazh.dailytrackerchild.pages.task_list.TaskListScreen
