@@ -62,7 +62,10 @@ fun DailyTrackerNavHost(
             val childrenCache = (activity.application as DailyTrackerChildApplication).compositionRoot.childrenCache
             val profile = childrenCache.getProfile(childId) ?: return@composable Text(text="Children not found")
             TaskListScreen(
-                viewModel = viewModel(factory = TaskListViewModel.Factory(profile))
+                viewModel = viewModel(factory = TaskListViewModel.Factory(profile)),
+                onProfileClicked = {
+                    navController.navigateUp()
+                }
             )
         }
 

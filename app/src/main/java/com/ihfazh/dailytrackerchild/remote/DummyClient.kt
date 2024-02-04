@@ -1,6 +1,8 @@
 package com.ihfazh.dailytrackerchild.remote
 
 import com.ihfazh.dailytrackerchild.components.ProfileItem
+import com.ihfazh.dailytrackerchild.components.Task
+import com.ihfazh.dailytrackerchild.components.TaskStatus
 import com.ihfazh.dailytrackerchild.fp.Outcome
 import com.ihfazh.dailytrackerchild.fp.OutcomeError
 import com.ihfazh.dailytrackerchild.fp.Success
@@ -12,7 +14,20 @@ data class LoginResponse(val token: String)
 
 data class ChildrenResponse(val profiles: List<ProfileItem>)
 
+data class TaskListResponse(val tasks: List<Task>)
+
 class DummyClient {
+    val tasks = listOf<Task>(
+        Task("1", "Sholat Subuh", TaskStatus.Finished),
+        Task("2", "Mengerjakan PR Ustadz", TaskStatus.Pending),
+        Task("3", "Dot ISA Pagi", TaskStatus.Todo),
+        Task("4", "Belajar Sama Amah Arini", TaskStatus.Todo),
+        Task("5", "Belajar Sama Amah Rufa", TaskStatus.Todo),
+        Task("6", "Dot Isa Sore", TaskStatus.Todo),
+        Task("6", "Trampolin 100 kali", TaskStatus.Todo),
+        Task("6", "Sapu sapu rumah", TaskStatus.Todo),
+        Task("6", "Sepedaan", TaskStatus.Todo),
+    )
     suspend fun login(body: LoginBody): Outcome<LoginResponse, OutcomeError>{
         delay(1000)
 //        return Outcome.failure(OutcomeError("hello"))
@@ -31,6 +46,22 @@ class DummyClient {
 
 //        return Outcome.failure(OutcomeError("Hahahaha"))
         return Outcome.success(ChildrenResponse(profiles))
+    }
+
+    suspend fun getTaskList(id: String): Outcome<TaskListResponse, OutcomeError> {
+        delay(1000)
+        return Outcome.success(TaskListResponse(tasks))
+
+        TODO("Not yet implemented")
+    }
+
+    suspend fun markTaskAsFinished(id: String): Outcome<Task, OutcomeError> {
+        delay(1000)
+
+        val statuses = listOf(TaskStatus.Finished, TaskStatus.Pending)
+        val task = tasks.find { t -> t.id == id } ?: return Outcome.failure(OutcomeError("Task not found"))
+
+        return Outcome.success(task.copy(status = statuses.random()))
     }
 
 }

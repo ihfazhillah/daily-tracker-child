@@ -1,5 +1,6 @@
 package com.ihfazh.dailytrackerchild.pages.task_list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +34,7 @@ import com.ihfazh.dailytrackerchild.components.DateItem
 import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.HijriDateItem
 import com.ihfazh.dailytrackerchild.components.MyProgress
+import com.ihfazh.dailytrackerchild.components.OnProfileClicked
 import com.ihfazh.dailytrackerchild.components.ProfileItem
 import com.ihfazh.dailytrackerchild.components.Task
 import com.ihfazh.dailytrackerchild.components.TaskCard
@@ -48,7 +50,9 @@ fun TaskList(
     state: BaseState,
     modifier: Modifier = Modifier,
     onTaskFinish: onTaskFinish = {},
-    onRetryClicked: OnRetryClicked = {}
+    onRetryClicked: OnRetryClicked = {},
+    onProfileClicked: () -> Unit
+
 ){
 
     val user = state.profile.toChild()
@@ -70,7 +74,9 @@ fun TaskList(
             modifier = modifier
         ){
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .clickable { onProfileClicked.invoke() }
             ) {
                 Avatar(child = user)
                 Spacer(modifier = Modifier.width(16.dp))
@@ -176,5 +182,6 @@ fun TaskListPreview(){
 
     TaskList(Loading(
         ProfileItem("1", "url", "hello", 0.2F),
-    ))
+    ),
+        onProfileClicked = {})
 }
