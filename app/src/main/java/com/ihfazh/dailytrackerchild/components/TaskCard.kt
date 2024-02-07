@@ -34,11 +34,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.serialization.Serializable
 
 
-enum class TaskStatus {Todo, Pending, Finished, Processing, Error}
+enum class TaskStatus {todo, pending, finished, processing, error}
 
 
+@Serializable
 data class Task(
     val id: String,
     val title : String,
@@ -55,19 +57,19 @@ fun TaskCard(
     onTaskFinishClick: onTaskFinish = {},
 ){
     val statusColor = when(task.status){
-        TaskStatus.Todo -> Color.Red
-        TaskStatus.Pending -> Color.Yellow
-        TaskStatus.Finished -> Color.Green
-        TaskStatus.Processing -> Color.Gray
-        TaskStatus.Error -> Color.Red
+        TaskStatus.todo -> Color.Red
+        TaskStatus.pending -> Color.Yellow
+        TaskStatus.finished -> Color.Green
+        TaskStatus.processing -> Color.Gray
+        TaskStatus.error -> Color.Red
     }
 
     val iconResourceId = when(task.status){
-        TaskStatus.Todo -> Icons.Default.FavoriteBorder
-        TaskStatus.Pending -> Icons.Default.Lock
-        TaskStatus.Finished -> Icons.Default.Favorite
-        TaskStatus.Processing -> Icons.Default.Info
-        TaskStatus.Error -> Icons.Default.Clear
+        TaskStatus.todo -> Icons.Default.FavoriteBorder
+        TaskStatus.pending -> Icons.Default.Lock
+        TaskStatus.finished -> Icons.Default.Favorite
+        TaskStatus.processing -> Icons.Default.Info
+        TaskStatus.error -> Icons.Default.Clear
     }
 
     Card (
@@ -111,7 +113,7 @@ fun TaskCard(
                 )
             }
 
-            if ((task.status == TaskStatus.Todo) or (task.status == TaskStatus.Error)){
+            if ((task.status == TaskStatus.todo) or (task.status == TaskStatus.error)){
                 ElevatedButton(
                     onClick = {onTaskFinishClick.invoke(task.id)},
                     modifier = Modifier
@@ -121,7 +123,7 @@ fun TaskCard(
                 }
             }
 
-            if (task.status == TaskStatus.Processing){
+            if (task.status == TaskStatus.processing){
                 CircularProgressIndicator(Modifier.width(50.dp).height(50.dp))
             }
         }
@@ -133,11 +135,11 @@ fun TaskCard(
 @Composable
 fun TaskCardPreview(){
     val tasks = listOf<Task>(
-        Task("1", "Sholat Subuh pada waktunya", TaskStatus.Finished),
-        Task("3", "Dot Isa pagi", TaskStatus.Processing),
-        Task("2", "Mengerjakan PR Ustadz", TaskStatus.Pending),
-        Task("3", "Dot Isa pagi", TaskStatus.Error),
-        Task("3", "Dot Isa pagi", TaskStatus.Todo),
+        Task("1", "Sholat Subuh pada waktunya", TaskStatus.finished),
+        Task("3", "Dot Isa pagi", TaskStatus.processing),
+        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
+        Task("3", "Dot Isa pagi", TaskStatus.error),
+        Task("3", "Dot Isa pagi", TaskStatus.todo),
     )
 
     Column(

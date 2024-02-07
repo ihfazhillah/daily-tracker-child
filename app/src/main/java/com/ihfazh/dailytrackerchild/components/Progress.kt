@@ -17,6 +17,11 @@ import kotlin.math.roundToInt
 
 @Composable
 fun MyProgress(progress: Float){
+    var totalProgress = (progress * 100)
+    if (totalProgress.isNaN()){
+        totalProgress = 0f
+    }
+
     Column {
         Text(text = "Kemajuan Kamu", style = Typography.labelLarge)
         Spacer(modifier = Modifier.height(8.dp))
@@ -30,7 +35,7 @@ fun MyProgress(progress: Float){
 
             Spacer(Modifier.width(16.dp))
 
-            Text(text = "${(progress * 100).roundToInt()}%", style = Typography.labelLarge)
+            Text(text = "${totalProgress.roundToInt()}%", style = Typography.labelLarge)
         }
     }
 }

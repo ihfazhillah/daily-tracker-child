@@ -4,5 +4,10 @@ plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.parcelize) apply false
+//    alias(libs.plugins.kotlinJVM) apply  false
+    alias(libs.plugins.pluginSerialization) apply false
+//    alias(libs.plugins.serialization) apply false
+//    kotlin("jvm") version "1.9.22"
+//    kotlin("plugin.serialization") version "1.9.22"
 }
 true // Needed to make the Suppress annotation work for the plugins block

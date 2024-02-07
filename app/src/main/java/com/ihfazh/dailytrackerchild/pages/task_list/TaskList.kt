@@ -59,7 +59,7 @@ fun TaskList(
     val date = state.dateItem
 
     val progress = if (state is Idle) {
-        state.tasks.filter { it.status === TaskStatus.Finished}.size.toFloat() / state.tasks.size
+        state.tasks.filter { it.status === TaskStatus.finished}.size.toFloat() / state.tasks.size
     } else {
         state.profile.progress
     }
@@ -165,15 +165,15 @@ fun TaskList(
 @Composable
 fun TaskListPreview(){
     val tasks = listOf<Task>(
-        Task("1", "Sholat Subuh", TaskStatus.Finished),
-        Task("2", "Mengerjakan PR Ustadz", TaskStatus.Pending),
-        Task("3", "Dot ISA Pagi", TaskStatus.Todo),
-        Task("4", "Belajar Sama Amah Arini", TaskStatus.Todo),
-        Task("5", "Belajar Sama Amah Rufa", TaskStatus.Todo),
-        Task("6", "Dot Isa Sore", TaskStatus.Todo),
-        Task("6", "Trampolin 100 kali", TaskStatus.Todo),
-        Task("6", "Sapu sapu rumah", TaskStatus.Todo),
-        Task("6", "Sepedaan", TaskStatus.Todo),
+        Task("1", "Sholat Subuh", TaskStatus.finished),
+        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
+        Task("3", "Dot ISA Pagi", TaskStatus.todo),
+        Task("4", "Belajar Sama Amah Arini", TaskStatus.todo),
+        Task("5", "Belajar Sama Amah Rufa", TaskStatus.todo),
+        Task("6", "Dot Isa Sore", TaskStatus.todo),
+        Task("6", "Trampolin 100 kali", TaskStatus.todo),
+        Task("6", "Sapu sapu rumah", TaskStatus.todo),
+        Task("6", "Sepedaan", TaskStatus.todo),
     )
     val date = DateItem(
         HijriDateItem(15, "Rajab", 1445),

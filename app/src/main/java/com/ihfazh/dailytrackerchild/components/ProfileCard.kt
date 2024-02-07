@@ -13,11 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.serialization.Serializable
 
 /*
 Mainly used for user picker
  */
 
+@Serializable
 data class ProfileItem (
     val id: String,
     val name: String,

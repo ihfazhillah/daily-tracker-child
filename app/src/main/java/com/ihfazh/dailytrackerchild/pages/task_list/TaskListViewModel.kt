@@ -9,7 +9,7 @@ import com.ihfazh.dailytrackerchild.components.ProfileItem
 import com.ihfazh.dailytrackerchild.components.TaskStatus
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
-import com.ihfazh.dailytrackerchild.remote.DummyClient
+import com.ihfazh.dailytrackerchild.remote.Client
 import com.ihfazh.dailytrackerchild.utils.DateProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class TaskListViewModel(
-    private val client: DummyClient,
+    private val client: Client,
     private val profileItem: ProfileItem,
     dateProvider: DateProvider
 ): ViewModel(){
@@ -46,12 +46,12 @@ class TaskListViewModel(
 
 
         viewModelScope.launch(Dispatchers.IO) {
-            _state.value = (state.value as Idle).updateTaskStatusById(id, TaskStatus.Processing)
+            _state.value = (state.value as Idle).updateTaskStatusById(id, TaskStatus.processing)
 
             val response = client.markTaskAsFinished(id)
 
             _state.value = when(response){
-                is Failure -> (state.value as Idle).updateTaskStatusById(id, TaskStatus.Error)
+                is Failure -> (state.value as Idle).updateTaskStatusById(id, TaskStatus.error)
                 is Success -> (state.value as Idle).updateTaskStatusById(response.value.id, response.value.status)
             }
         }

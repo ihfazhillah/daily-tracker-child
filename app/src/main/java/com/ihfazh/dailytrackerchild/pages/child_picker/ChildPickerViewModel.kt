@@ -5,18 +5,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.ihfazh.dailytrackerchild.utils.ChildrenCache
 import com.ihfazh.dailytrackerchild.DailyTrackerChildApplication
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
-import com.ihfazh.dailytrackerchild.remote.DummyClient
+import com.ihfazh.dailytrackerchild.remote.Client
+import com.ihfazh.dailytrackerchild.utils.ChildrenCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChildPickerViewModel(
-    private val client: DummyClient,
+    private val client: Client,
     private val childrenCache: ChildrenCache
 ): ViewModel(){
     private var _state = MutableStateFlow<ChildState>(Loading)
