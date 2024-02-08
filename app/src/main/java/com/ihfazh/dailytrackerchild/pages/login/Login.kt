@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +22,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,6 +45,8 @@ fun Login(state: LoginState, modifier: Modifier = Modifier, onLoginClicked: OnLo
     }
 
     val enabledButton = !(username.isEmpty() && password.isEmpty()) and  (state !is Submitting)
+
+    val focusManager = LocalFocusManager.current
 
 
     Column(
@@ -63,12 +70,32 @@ fun Login(state: LoginState, modifier: Modifier = Modifier, onLoginClicked: OnLo
         ){
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(text = "Username", style = MaterialTheme.typography.labelLarge)
-                TextField(value = username, onValueChange = { username = it },  placeholder = {Text("Username")})
+                TextField(
+                    value = username,
+                    onValueChange = { username = it },
+                    placeholder = {Text("Username")},
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+                )
             }
 
             Column (verticalArrangement = Arrangement.spacedBy(8.dp)){
                 Text(text = "Password", style = MaterialTheme.typography.labelLarge)
-                TextField(value = password, onValueChange = { password = it }, visualTransformation = PasswordVisualTransformation())
+                TextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Go),
+                    keyboardActions = KeyboardActions (
+                        onGo = {
+                            onLoginClicked.invoke(username, password)
+                        }
+                    )
+                )
             }
 
             ElevatedButton(onClick = {onLoginClicked.invoke(username, password)}, enabled = enabledButton) {
