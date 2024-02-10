@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,15 +26,19 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import kotlinx.serialization.Serializable
 
 
@@ -44,7 +49,8 @@ enum class TaskStatus {todo, pending, finished, processing, error}
 data class Task(
     val id: String,
     val title : String,
-    val status: TaskStatus
+    val status: TaskStatus,
+    val image: String? = null
 )
 
 typealias onTaskFinish = (id: String) -> Unit
@@ -78,13 +84,29 @@ fun TaskCard(
         elevation = CardDefaults.cardElevation(5.dp, 10.dp)
     ){
 
-        Text(
-            text = task.title,
-            fontSize = 30.sp,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(12.dp)
                 .fillMaxWidth()
-        )
+                .padding(12.dp)
+        ) {
+            AsyncImage(
+                model = task.image,
+                contentDescription = null,
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+            )
+            
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Text(
+                text = task.title,
+                style = MaterialTheme.typography.displaySmall,
+                modifier = Modifier
+            )
+        }
+
 
         Spacer(modifier = Modifier.height(40.dp))
         Divider(thickness=1.dp)
@@ -124,7 +146,10 @@ fun TaskCard(
             }
 
             if (task.status == TaskStatus.processing){
-                CircularProgressIndicator(Modifier.width(50.dp).height(50.dp))
+                CircularProgressIndicator(
+                    Modifier
+                        .width(50.dp)
+                        .height(50.dp))
             }
         }
     }

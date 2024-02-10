@@ -64,6 +64,7 @@ class ActualClient(
             val data = response.body<ChildrenResponse>()
             Outcome.success(data)
         } catch (e: Exception){
+            println(e.stackTraceToString())
             Outcome.failure(OutcomeError("something error"))
         }
     }
@@ -74,6 +75,7 @@ class ActualClient(
         return try {
             Outcome.success(response.body<TaskListFromRemoteResponse>().toTaskListResponse())
         } catch (e: Exception){
+            println(e.stackTraceToString())
             Outcome.failure(OutcomeError(e.stackTraceToString()))
         }
     }
@@ -98,5 +100,5 @@ private fun TaskListFromRemoteResponse.toTaskListResponse(): TaskListResponse = 
 )
 
 private fun TaskRemote.toTask(): Task {
-    return Task(id, title, TaskStatus.valueOf(status))
+    return Task(id, title, TaskStatus.valueOf(status), image)
 }

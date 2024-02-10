@@ -15,7 +15,8 @@ data class ChildrenResponse(val profiles: List<ProfileItem>)
 data class TaskRemote(
     val id: String,
     val title : String,
-    val status: String
+    val status: String,
+    val image: String? = null
 )
 
 @Serializable

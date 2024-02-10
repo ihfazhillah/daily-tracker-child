@@ -10,7 +10,9 @@ import com.ihfazh.dailytrackerchild.utils.TokenCache
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.DefaultJson
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 class ActivityCompositionRoot(context: Application) {
     val childrenCache: ChildrenCache = ChildrenCache(context.getSharedPreferences("childrenCache", Context.MODE_PRIVATE))
@@ -21,7 +23,15 @@ class ActivityCompositionRoot(context: Application) {
 
     private val ktor = HttpClient(OkHttp){
         install(ContentNegotiation){
-            json()
+            json(Json{
+                ignoreUnknownKeys = true
+                encodeDefaults = true
+                isLenient = true
+                allowSpecialFloatingPointValues = true
+                allowStructuredMapKeys = true
+                prettyPrint = false
+                useArrayPolymorphism = false
+            })
         }
 
         install(TokenHeader){
