@@ -9,6 +9,7 @@ import com.ihfazh.dailytrackerchild.utils.DateProvider
 import com.ihfazh.dailytrackerchild.utils.TokenCache
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.DefaultJson
 import io.ktor.serialization.kotlinx.json.json
@@ -22,6 +23,11 @@ class ActivityCompositionRoot(context: Application) {
 
 
     private val ktor = HttpClient(OkHttp){
+
+        install(HttpTimeout){
+            socketTimeoutMillis = 120_000
+        }
+
         install(ContentNegotiation){
             json(Json{
                 ignoreUnknownKeys = true
