@@ -1,6 +1,7 @@
 package com.ihfazh.dailytrackerchild.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,6 +55,7 @@ data class Task(
 )
 
 typealias onTaskFinish = (id: String) -> Unit
+typealias onTitleClick = (title: String) -> Unit
 
 
 @Composable
@@ -61,6 +63,7 @@ fun TaskCard(
     task: Task,
     modifier: Modifier = Modifier,
     onTaskFinishClick: onTaskFinish = {},
+    onTitleClick: onTitleClick = {}
 ){
     val statusColor = when(task.status){
         TaskStatus.todo -> Color.Red
@@ -87,6 +90,9 @@ fun TaskCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .clickable {
+                    onTitleClick.invoke(task.title)
+                }
                 .fillMaxWidth()
                 .padding(12.dp)
         ) {
@@ -105,6 +111,7 @@ fun TaskCard(
                 style = MaterialTheme.typography.displaySmall,
                 modifier = Modifier
             )
+
         }
 
 

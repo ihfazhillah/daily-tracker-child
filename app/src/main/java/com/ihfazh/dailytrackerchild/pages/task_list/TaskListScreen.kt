@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 fun TaskListScreen(
     viewModel: TaskListViewModel,
     modifier: Modifier = Modifier,
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
+    onTitleClicked: (title: String) -> Unit
 ){
 
     val state = viewModel.state.collectAsState()
@@ -18,6 +19,7 @@ fun TaskListScreen(
         modifier = modifier,
         onRetryClicked = {viewModel.getTaskList()},
         onTaskFinish = {viewModel.markTaskAsFinished(it)},
-        onProfileClicked = onProfileClicked
+        onProfileClicked = onProfileClicked,
+        onTitleClick = onTitleClicked
     )
 }

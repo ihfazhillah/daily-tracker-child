@@ -1,5 +1,6 @@
 package com.ihfazh.dailytrackerchild
 
+import android.speech.tts.TextToSpeech
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -53,12 +54,17 @@ fun DailyTrackerNavHost(
         composable("task-list/{childId}"){ backStackEntry ->
             val childId = backStackEntry.arguments?.getString("childId") ?: return@composable  Text(text = "Hello world")
             val childrenCache = (activity.application as DailyTrackerChildApplication).compositionRoot.childrenCache
+            val textToSpeech = (activity.application as DailyTrackerChildApplication).compositionRoot.textToSpeech
             val profile = childrenCache.getProfile(childId) ?: return@composable Text(text="Children not found")
 
             TaskListScreen(
                 viewModel = viewModel(factory = TaskListViewModel.Factory(profile)),
                 onProfileClicked = {
                     navController.navigateUp()
+                },
+                onTitleClicked = {title ->
+                    textToSpeech.speak(title, TextToSpeech.QUEUE_ADD, null)
+
                 }
             )
         }

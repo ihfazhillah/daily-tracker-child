@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.parcelize)
 //    alias(libs.plugins.kotlinJVM)
     alias(libs.plugins.pluginSerialization)
+//    alias(libs.plugins.google.services)
 
 //    kotlin("jvm") version "1.9.22"
 //    kotlin("plugin.serialization") version "1.9.22"

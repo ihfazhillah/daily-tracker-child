@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Button
@@ -39,6 +42,7 @@ import com.ihfazh.dailytrackerchild.components.Task
 import com.ihfazh.dailytrackerchild.components.TaskCard
 import com.ihfazh.dailytrackerchild.components.TaskStatus
 import com.ihfazh.dailytrackerchild.components.onTaskFinish
+import com.ihfazh.dailytrackerchild.components.onTitleClick
 import com.ihfazh.dailytrackerchild.types.OnRetryClicked
 
 
@@ -50,7 +54,8 @@ fun TaskList(
     modifier: Modifier = Modifier,
     onTaskFinish: onTaskFinish = {},
     onRetryClicked: OnRetryClicked = {},
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
+    onTitleClick: onTitleClick,
 
 ){
 
@@ -101,8 +106,8 @@ fun TaskList(
                 }
 
                 if (state is Idle){
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Fixed(2),
                         contentPadding = PaddingValues(8.dp)
                     ){
                         items(state.tasks){task ->
@@ -110,7 +115,8 @@ fun TaskList(
                                 task = task,
                                 modifier = Modifier
                                     .padding(12.dp),
-                                onTaskFinishClick = onTaskFinish
+                                onTaskFinishClick = onTaskFinish,
+                                onTitleClick = onTitleClick
                             )
                         }
                     }
@@ -185,6 +191,7 @@ fun TaskListPreview(){
             ProfileItem("1", "url", "hello", 0.2F),
             date
         ),
-        onProfileClicked = {}
+        onProfileClicked = {},
+        onTitleClick = {}
     )
 }
