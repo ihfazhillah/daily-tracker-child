@@ -19,10 +19,15 @@ Children and Tasks management currently still manually in the [backend side here
 
 ## Screenshots
 
-![login](screenshots/WhatsApp Image 2024-02-08 at 7.52.08 PM.jpeg)
+<details>
 
-![children list](screenshots/WhatsApp Image 2024-02-08 at 7.52.20 PM.jpeg)
+<summary>Click to see screenshot</summary>
 
-![task list all todo](screenshots/WhatsApp Image 2024-02-08 at 7.52.36 PM.jpeg)
+![login](screenshots/login.jpeg)
 
-![task list with don](screenshots/WhatsApp Image 2024-02-08 at 7.52.50 PM.jpeg)
+![children list](screenshots/children-list.jpeg)
+
+![task list all todo](screenshots/task-list-all-todo.jpeg)
+
+![task list with don](screenshots/task-list-with-done.jpeg)
+</details>
