@@ -16,3 +16,10 @@ Children and Tasks management currently still manually in the [backend side here
 
 - yes/no
 - need verification
+
+## Screenshots
+
+![](screenshots/WhatsApp Image 2024-02-08 at 7.52.08 PM.jpeg)
+![](screenshots/WhatsApp Image 2024-02-08 at 7.52.20 PM.jpeg)
+![](screenshots/WhatsApp Image 2024-02-08 at 7.52.36 PM.jpeg)
+![](screenshots/WhatsApp Image 2024-02-08 at 7.52.50 PM.jpeg)
