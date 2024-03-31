@@ -48,7 +48,12 @@ data class TikrarData(
 
 
 @Composable
-fun Tikrar(data: TikrarData, modifier: Modifier = Modifier){
+fun Tikrar(
+    data: TikrarData,
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+    onNext: () -> Unit = {}
+){
     Column (modifier = modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -62,7 +67,7 @@ fun Tikrar(data: TikrarData, modifier: Modifier = Modifier){
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start
         ) {
             IconButton(
-                onClick = { /*TODO*/ }) {
+                onClick = onBack) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back")
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -124,7 +129,7 @@ fun Tikrar(data: TikrarData, modifier: Modifier = Modifier){
         ){
             Button(
                 enabled = !data.isAudioPlaying,
-                onClick = { /*TODO*/ }) {
+                onClick = onNext) {
                 Text(text = "Lanjutkan")
                 Icon(Icons.Default.ArrowForward, contentDescription = null)
 
@@ -142,7 +147,7 @@ fun TikrarPreview(){
         true,
         0,
         0,
-        3
+        5
     )
     Tikrar(tikrarData)
 }
