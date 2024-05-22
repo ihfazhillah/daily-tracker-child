@@ -1,21 +1,18 @@
 package com.ihfazh.dailytrackerchild.utils
 
-import android.content.SharedPreferences
+class TokenCache
+{
 
-class TokenCache(
-    private val sharedPreferences: SharedPreferences
-){
+    private var _token : String? = null
 
     private val tokenKey = "userToken"
 
     fun saveToken(token: String){
-        sharedPreferences.edit()
-            .putString(tokenKey, token)
-            .apply()
+        _token = token
     }
 
     fun getToken(): String?{
-        return sharedPreferences.getString(tokenKey, null)
+        return _token
     }
 
 }

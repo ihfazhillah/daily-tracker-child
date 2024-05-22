@@ -1,5 +1,6 @@
 package com.ihfazh.dailytrackerchild
 
+import android.accounts.AccountManager
 import android.app.Application
 import android.content.Context
 import android.speech.tts.TextToSpeech
@@ -13,14 +14,14 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.DefaultJson
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import java.util.Locale
 
 class ActivityCompositionRoot(context: Application) {
     val childrenCache: ChildrenCache = ChildrenCache(context.getSharedPreferences("childrenCache", Context.MODE_PRIVATE))
-    val tokenCacheUtil = TokenCache(context.getSharedPreferences("tokenCache", Context.MODE_PRIVATE))
+    val tokenCacheUtil = TokenCache()
+    val accountManager = AccountManager.get(context)
 
     val dateProvider = DateProvider()
 
