@@ -21,8 +21,8 @@ android {
         applicationId = "com.ihfazh.dailytrackerchild"
         minSdk = 28
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 4
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -31,13 +31,21 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName("release"){
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
+
+        getByName("debug"){
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
