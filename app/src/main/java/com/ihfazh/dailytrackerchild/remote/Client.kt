@@ -1,6 +1,6 @@
 package com.ihfazh.dailytrackerchild.remote
 
-import com.ihfazh.dailytrackerchild.components.Task
+import com.ihfazh.dailytrackerchild.data.Task
 import com.ihfazh.dailytrackerchild.fp.Outcome
 import com.ihfazh.dailytrackerchild.fp.OutcomeError
 

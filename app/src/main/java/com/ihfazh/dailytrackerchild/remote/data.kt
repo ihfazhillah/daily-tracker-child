@@ -1,7 +1,7 @@
 package com.ihfazh.dailytrackerchild.remote
 
 import com.ihfazh.dailytrackerchild.components.ProfileItem
-import com.ihfazh.dailytrackerchild.components.Task
+import com.ihfazh.dailytrackerchild.data.Task
 import kotlinx.serialization.Serializable
 
 @Serializable

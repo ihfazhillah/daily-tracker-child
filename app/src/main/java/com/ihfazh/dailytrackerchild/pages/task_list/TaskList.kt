@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -38,9 +35,9 @@ import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.HijriDateItem
 import com.ihfazh.dailytrackerchild.components.MyProgress
 import com.ihfazh.dailytrackerchild.components.ProfileItem
-import com.ihfazh.dailytrackerchild.components.Task
+import com.ihfazh.dailytrackerchild.data.Task
 import com.ihfazh.dailytrackerchild.components.TaskCard
-import com.ihfazh.dailytrackerchild.components.TaskStatus
+import com.ihfazh.dailytrackerchild.data.TaskStatus
 import com.ihfazh.dailytrackerchild.components.onTaskFinish
 import com.ihfazh.dailytrackerchild.components.onTitleClick
 import com.ihfazh.dailytrackerchild.types.OnRetryClicked

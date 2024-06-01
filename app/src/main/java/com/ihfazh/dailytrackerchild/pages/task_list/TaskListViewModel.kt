@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.ihfazh.dailytrackerchild.DailyTrackerChildApplication
 import com.ihfazh.dailytrackerchild.components.ProfileItem
-import com.ihfazh.dailytrackerchild.components.TaskStatus
+import com.ihfazh.dailytrackerchild.data.TaskStatus
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
 import com.ihfazh.dailytrackerchild.remote.Client

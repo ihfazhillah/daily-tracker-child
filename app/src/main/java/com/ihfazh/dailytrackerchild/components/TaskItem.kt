@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ihfazh.dailytrackerchild.data.Task
+import com.ihfazh.dailytrackerchild.data.TaskStatus
 
 
 typealias OnSelesai = (Task) -> Unit

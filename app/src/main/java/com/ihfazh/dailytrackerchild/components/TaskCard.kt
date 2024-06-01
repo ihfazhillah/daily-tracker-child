@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,26 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.LineBreak
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import kotlinx.serialization.Serializable
+import com.ihfazh.dailytrackerchild.data.Task
+import com.ihfazh.dailytrackerchild.data.TaskStatus
 
-
-enum class TaskStatus {todo, pending, finished, udzur, processing, error}
-
-
-@Serializable
-data class Task(
-    val id: String,
-    val title : String,
-    val status: TaskStatus,
-    val image: String? = null,
-    val udzur: String? = null
-)
 
 typealias onTaskFinish = (id: String) -> Unit
 typealias onTitleClick = (title: String) -> Unit
