@@ -16,6 +16,7 @@ data class TaskRemote(
     val id: String,
     val title : String,
     val status: String,
+    val time: String,
     val image: String? = null
 )
 

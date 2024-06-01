@@ -155,11 +155,11 @@ fun TaskCard(
 @Composable
 fun TaskCardPreview(){
     val tasks = listOf<Task>(
-        Task("1", "Sholat Subuh pada waktunya", TaskStatus.finished),
-        Task("3", "Dot Isa pagi", TaskStatus.processing),
-        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
-        Task("3", "Dot Isa pagi", TaskStatus.error),
-        Task("3", "Dot Isa pagi", TaskStatus.todo),
+//        Task("1", "Sholat Subuh pada waktunya", TaskStatus.finished),
+//        Task("3", "Dot Isa pagi", TaskStatus.processing),
+//        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
+//        Task("3", "Dot Isa pagi", TaskStatus.error),
+//        Task("3", "Dot Isa pagi", TaskStatus.todo),
     )
 
     Column(

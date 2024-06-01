@@ -11,15 +11,15 @@ import kotlinx.coroutines.delay
 
 class DummyClient : Client {
     val tasks = listOf<Task>(
-        Task("1", "Sholat Subuh", TaskStatus.finished),
-        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
-        Task("3", "Dot ISA Pagi", TaskStatus.todo),
-        Task("4", "Belajar Sama Amah Arini", TaskStatus.todo),
-        Task("5", "Belajar Sama Amah Rufa", TaskStatus.todo),
-        Task("6", "Dot Isa Sore", TaskStatus.todo),
-        Task("6", "Trampolin 100 kali", TaskStatus.todo),
-        Task("6", "Sapu sapu rumah", TaskStatus.todo),
-        Task("6", "Sepedaan", TaskStatus.todo),
+//        Task("1", "Sholat Subuh", TaskStatus.finished),
+//        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
+//        Task("3", "Dot ISA Pagi", TaskStatus.todo),
+//        Task("4", "Belajar Sama Amah Arini", TaskStatus.todo),
+//        Task("5", "Belajar Sama Amah Rufa", TaskStatus.todo),
+//        Task("6", "Dot Isa Sore", TaskStatus.todo),
+//        Task("6", "Trampolin 100 kali", TaskStatus.todo),
+//        Task("6", "Sapu sapu rumah", TaskStatus.todo),
+//        Task("6", "Sepedaan", TaskStatus.todo),
     )
     override suspend fun login(body: LoginBody): Outcome<LoginResponse, OutcomeError>{
         delay(1000)

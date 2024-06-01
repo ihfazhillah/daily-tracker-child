@@ -1,45 +1,42 @@
 package com.ihfazh.dailytrackerchild.pages.task_list
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import com.ihfazh.dailytrackerchild.components.Avatar
 import com.ihfazh.dailytrackerchild.components.Child
-import com.ihfazh.dailytrackerchild.components.Date
+import com.ihfazh.dailytrackerchild.components.CircleProgress
 import com.ihfazh.dailytrackerchild.components.DateItem
-import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.HijriDateItem
-import com.ihfazh.dailytrackerchild.components.MyProgress
 import com.ihfazh.dailytrackerchild.components.ProfileItem
-import com.ihfazh.dailytrackerchild.data.Task
-import com.ihfazh.dailytrackerchild.components.TaskCard
-import com.ihfazh.dailytrackerchild.data.TaskStatus
+import com.ihfazh.dailytrackerchild.components.TaskGroupCard
+import com.ihfazh.dailytrackerchild.components.VisibilityToggle
 import com.ihfazh.dailytrackerchild.components.onTaskFinish
 import com.ihfazh.dailytrackerchild.components.onTitleClick
+import com.ihfazh.dailytrackerchild.data.Task
+import com.ihfazh.dailytrackerchild.data.TaskGroup
+import com.ihfazh.dailytrackerchild.data.TaskStatus
 import com.ihfazh.dailytrackerchild.types.OnRetryClicked
 
 
@@ -53,10 +50,15 @@ fun TaskList(
     onRetryClicked: OnRetryClicked = {},
     onProfileClicked: () -> Unit,
     onTitleClick: onTitleClick,
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+
 
 ){
 
-    val user = state.profile.toChild()
+    val finishedVisible = remember {
+        mutableStateOf(false)
+    }
+
 
     val date = state.dateItem
 
@@ -66,117 +68,150 @@ fun TaskList(
         state.profile.progress
     }
 
-
-    Surface {
-        Column (
-            modifier = modifier
-        ){
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clickable { onProfileClicked.invoke() }
-            ) {
-                Avatar(child = user)
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = user.name,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-            }
-
-            Row {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(24.dp)
-                ){
-
-                    Date(
-                        item = date,
-                    )
-
-                    Spacer(modifier = Modifier.height(40.dp))
-
-                    MyProgress(progress = progress)
-                }
-
-                if (state is Idle){
-                    LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(2),
-                        contentPadding = PaddingValues(8.dp)
-                    ){
-                        items(state.tasks){task ->
-                            TaskCard(
-                                task = task,
-                                modifier = Modifier
-                                    .padding(12.dp),
-                                onTaskFinishClick = onTaskFinish,
-                                onTitleClick = onTitleClick
-                            )
-                        }
-                    }
-                }
-
-                if (state is Error){
-                    Column (
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                    ){
-                        ErrorMessage(errorMessage = state.error)
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(onClick = onRetryClicked) {
-                            Icon(
-                                Icons.Rounded.Refresh,
-                                null
-                            )
-                            Text(text = "Ulangi")
-                        }
-
-                    }
-                }
-
-                if (state is Loading){
-                    Column (
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                    ){
-
-                        CircularProgressIndicator(Modifier.height(100.dp).width(100.dp))
-
-                    }
-
-                }
+    val taskGroups: List<TaskGroup> = if (state is Idle){
+        state.tasks.filter {
+            if (finishedVisible.value){
+               true
+            } else {
+                it.status !in listOf(TaskStatus.finished, TaskStatus.udzur)
 
             }
+        }.groupBy { it.time }
+            .map {
+                TaskGroup(it.key, it.value)
+            }
+    } else {
+        listOf()
+    }
+
+
+
+    Column(
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Column (verticalArrangement = Arrangement.spacedBy(16.dp)){
+
+                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Avatar(child = state.profile.toChild())
+
+
+                    Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = "${date.hijriDateItem.date} ${date.hijriDateItem.month} ${date.hijriDateItem.year}", style = MaterialTheme.typography.titleLarge)
+                        Text(text = date.georgianDateString)
+                    }
+
+                    if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            CircleProgress(progress = progress, diameter = 80.dp)
+                        }
+                    }
+
+                }
+
+
+                Text(text = "Assalamualaikum, ${state.profile.name}!", style = MaterialTheme.typography.displaySmall)
+
+
+            }
+
+            if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM){
+                CircleProgress(progress = progress)
+            }
+
+
         }
 
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            // container
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                ,
+                horizontalArrangement = Arrangement.End
+            ) {
+                // toggle button
+                VisibilityToggle(visible = finishedVisible.value) {
+                    finishedVisible.value = !finishedVisible.value
+                }
+
+            }
+
+            if (state is Loading){
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                    Text("Memuat...", style = MaterialTheme.typography.headlineMedium)
+                }
+            } else if (state is Error){
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Error: ${state.error}", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.error)
+                    OutlinedButton(
+                        onClick = onRetryClicked,
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
+
+                    ) {
+                        Text(text = "Coba Lagi")
+                    }
+                }
+            } else if (state is Idle) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp, 0.dp, 16.dp, 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ){
+                    taskGroups.map{
+                        TaskGroupCard(taskGroup = it)
+                    }
+
+                }
+            }
+
+
+        }
+
+
     }
+
 }
 
 
-@Preview(widthDp = 1280)
+@Preview(device = "spec:parent=Nexus 7")
 @Composable
 fun TaskListPreview(){
     val tasks = listOf<Task>(
-        Task("1", "Sholat Subuh", TaskStatus.finished),
-        Task("2", "Mengerjakan PR Ustadz", TaskStatus.pending),
-        Task("3", "Dot ISA Pagi", TaskStatus.todo),
-        Task("4", "Belajar Sama Amah Arini", TaskStatus.todo),
-        Task("5", "Belajar Sama Amah Rufa", TaskStatus.todo),
-        Task("6", "Dot Isa Sore", TaskStatus.todo),
-        Task("6", "Trampolin 100 kali", TaskStatus.todo),
-        Task("6", "Sapu sapu rumah", TaskStatus.todo),
-        Task("6", "Sepedaan", TaskStatus.todo),
+        Task("1", "Sholat Subuh", "04:00", TaskStatus.finished),
+        Task("2", "Mengerjakan PR Ustadz", "04:00", TaskStatus.pending),
+        Task("3", "Dot ISA Pagi", "08:00", TaskStatus.todo),
+        Task("4", "Belajar Sama Amah Arini", "10:00", TaskStatus.todo),
+        Task("5", "Belajar Sama Amah Rufa", "15:00", TaskStatus.todo),
+        Task("6", "Dot Isa Sore", "16:00", TaskStatus.todo),
+        Task("6", "Trampolin 100 kali", "16:00", TaskStatus.todo),
+        Task("6", "Sapu sapu rumah", "13:00", TaskStatus.todo),
+        Task("6", "Sepedaan", "13:00", TaskStatus.todo),
     )
     val date = DateItem(
         HijriDateItem(15, "Rajab", 1445),
@@ -184,9 +219,10 @@ fun TaskListPreview(){
     )
 
     TaskList(
-        Loading(
-            ProfileItem("1", "url", "hello", 0.2F),
-            date
+        Idle(
+            ProfileItem("1", "Sakinah", "hello", 0.2F),
+            date,
+            tasks
         ),
         onProfileClicked = {},
         onTitleClick = {}

@@ -238,11 +238,11 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
 @Composable
 fun TaskItemPreview(){
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        TaskItem(task = Task("1", "Sholat Subuh", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
-        TaskItem(task = Task("2", "Dzikir Pagi", TaskStatus.pending, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
-        TaskItem(task = Task("3", "Murojaah Al Quran", TaskStatus.finished, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
-        TaskItem(task = Task("4", "PR Khot", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali."))
-        TaskItem(task = Task("6", "Sarapan", TaskStatus.processing, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
-        TaskItem(task = Task("6", "Error", TaskStatus.error, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
+//        TaskItem(task = Task("1", "Sholat Subuh", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
+//        TaskItem(task = Task("2", "Dzikir Pagi", TaskStatus.pending, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
+//        TaskItem(task = Task("3", "Murojaah Al Quran", TaskStatus.finished, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
+//        TaskItem(task = Task("4", "PR Khot", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali."))
+//        TaskItem(task = Task("6", "Sarapan", TaskStatus.processing, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
+//        TaskItem(task = Task("6", "Error", TaskStatus.error, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
     }
 }

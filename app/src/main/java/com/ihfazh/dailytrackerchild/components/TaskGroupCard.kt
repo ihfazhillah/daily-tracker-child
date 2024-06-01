@@ -65,7 +65,7 @@ fun TaskGroupCard(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(8.dp, 0.dp, 8.dp, 32.dp)
         ) {
             taskGroup.tasks.map{ task ->
                 TaskItem(task = task, onSelesai = onSelesai, onUdzur = onUdzur)
@@ -83,10 +83,10 @@ fun TaskGroupPreview(){
     val taskGroup = TaskGroup(
         "04:00",
         listOf(
-            Task("1", "Sholat Subuh", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
-            Task("2", "Dzikir Pagi", TaskStatus.pending, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
-            Task("3", "Murojaah Al Quran", TaskStatus.finished, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
-            Task("4", "PR Khot", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali.")
+            Task("1", "Sholat Subuh", "10", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
+            Task("2", "Dzikir Pagi", "10", TaskStatus.pending, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
+            Task("3", "Murojaah Al Quran",  "10", TaskStatus.finished, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"),
+            Task("4", "PR Khot", "10", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali.")
         )
     )
 
