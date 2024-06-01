@@ -43,7 +43,7 @@ import coil.compose.AsyncImage
 import kotlinx.serialization.Serializable
 
 
-enum class TaskStatus {todo, pending, finished, processing, error}
+enum class TaskStatus {todo, pending, finished, udzur, processing, error}
 
 
 @Serializable
@@ -51,7 +51,8 @@ data class Task(
     val id: String,
     val title : String,
     val status: TaskStatus,
-    val image: String? = null
+    val image: String? = null,
+    val udzur: String? = null
 )
 
 typealias onTaskFinish = (id: String) -> Unit
@@ -71,6 +72,7 @@ fun TaskCard(
         TaskStatus.finished -> Color.Green
         TaskStatus.processing -> Color.Gray
         TaskStatus.error -> Color.Red
+        TaskStatus.udzur -> TODO()
     }
 
     val iconResourceId = when(task.status){
@@ -79,6 +81,7 @@ fun TaskCard(
         TaskStatus.finished -> Icons.Default.Favorite
         TaskStatus.processing -> Icons.Default.Info
         TaskStatus.error -> Icons.Default.Clear
+        TaskStatus.udzur -> TODO()
     }
 
     Card (
