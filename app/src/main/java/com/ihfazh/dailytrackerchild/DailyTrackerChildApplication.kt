@@ -3,10 +3,10 @@ package com.ihfazh.dailytrackerchild
 import android.app.Application
 
 class DailyTrackerChildApplication: Application() {
-    lateinit var compositionRoot : ActivityCompositionRoot
+    lateinit var compositionRoot : ApplicationCompositionRoot
     override fun onCreate() {
         super.onCreate()
-        compositionRoot = ActivityCompositionRoot(this)
+        compositionRoot = ApplicationCompositionRoot(this)
     }
 
 }

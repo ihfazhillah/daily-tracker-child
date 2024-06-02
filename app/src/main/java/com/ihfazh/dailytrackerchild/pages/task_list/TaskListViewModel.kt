@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.ihfazh.dailytrackerchild.DailyTrackerChildApplication
 import com.ihfazh.dailytrackerchild.components.ProfileItem
+import com.ihfazh.dailytrackerchild.data.Task
 import com.ihfazh.dailytrackerchild.data.TaskStatus
 import com.ihfazh.dailytrackerchild.fp.Failure
 import com.ihfazh.dailytrackerchild.fp.Success
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 class TaskListViewModel(
     private val client: Client,
@@ -49,6 +51,48 @@ class TaskListViewModel(
             _state.value = (state.value as Idle).updateTaskStatusById(id, TaskStatus.processing)
 
             val response = client.markTaskAsFinished(id)
+
+            _state.value = when(response){
+                is Failure -> (state.value as Idle).updateTaskStatusById(id, TaskStatus.error)
+                is Success -> (state.value as Idle).updateTaskStatusById(response.value.id, response.value.status)
+            }
+        }
+    }
+
+    fun pickPhotoFor(task: Task){
+        if (state.value !is Idle){
+            return
+        }
+
+        val currentState = state.value as Idle
+
+        _state.value = PickPhoto(
+            currentState.profile,
+            currentState.dateItem,
+            currentState.tasks,
+            task
+        )
+
+    }
+
+    fun markTaskAsFinished(id: String, file: File){
+        if (state.value !is PickPhoto){
+            return
+        }
+
+        val currentState = (state.value as PickPhoto)
+
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val response = client.markTaskAsFinished(id, file)
+            _state.value = Idle(
+                currentState.profile,
+                currentState.dateItem,
+                currentState.tasks
+            )
+
+            _state.value = (state.value as Idle).updateTaskStatusById(id, TaskStatus.processing)
 
             _state.value = when(response){
                 is Failure -> (state.value as Idle).updateTaskStatusById(id, TaskStatus.error)

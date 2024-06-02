@@ -7,7 +7,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2023.08.00"
+compose-bom = "2024.05.00"
 coil = "2.5.0"
 viewmodel-compose = "2.6.1"
 parcelize = "1.9.0"
@@ -16,6 +16,10 @@ moshi = "1.15.0"
 ktor = "2.3.8"
 window-manager = "1.3.0"
 adaptive-android = "1.0.0-beta02"
+camera = "1.3.3"
+accompanist = "0.34.0"
+camera-view = "1.3.3"
+camposer = "0.4.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -44,6 +48,13 @@ kotlinx-serialization = {group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 ktor-serialization-kotlinx-json = {group = "io.ktor", name="ktor-serialization-kotlinx-json", version.ref = "ktor"}
 window-manager = {group = "androidx.window", name = "window-core-android", version.ref = "window-manager"}
 androidx-adaptive-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-android", version.ref = "adaptive-android" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camera" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camera" }
+accompanist-permissions = {group = "com.google.accompanist", name="accompanist-permissions", version.ref = "accompanist"}
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camera-view" }
+
+# jetpack camera library
+camposer = {group = "io.github.ujizin", name = "camposer", version.ref = "camposer"}
 
 
 [plugins]

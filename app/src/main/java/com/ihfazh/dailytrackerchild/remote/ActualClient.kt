@@ -8,11 +8,16 @@ import com.ihfazh.dailytrackerchild.utils.TokenCache
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
+import java.io.File
 
 
 class TokenHeaderConfiguration {
@@ -93,6 +98,28 @@ class ActualClient(
             Outcome.failure(OutcomeError(e.stackTraceToString()))
         }
     }
+
+    override suspend fun markTaskAsFinished(id: String, file: File): Outcome<Task, OutcomeError> {
+        val url = "$baseUrl$childrenTaskBase/mark-as-finished/"
+        val response = httpClient.post(url){
+            setBody(MultiPartFormDataContent(
+                formData{
+                    append("task_id", id)
+                    append("photo", file.readBytes(), Headers.build {
+                        append(HttpHeaders.ContentType, "image/jpeg")
+                        append(HttpHeaders.ContentDisposition, "filename=\"${id}.jpeg\"")
+                    })
+                }
+            ))
+
+        }
+        return try {
+            Outcome.success(response.body<MarkAsFinishedResponse>().task.toTask())
+        } catch (e: Exception){
+            println(e.stackTraceToString())
+            Outcome.failure(OutcomeError(e.stackTraceToString()))
+        }
+    }
 }
 
 private fun TaskListFromRemoteResponse.toTaskListResponse(): TaskListResponse = TaskListResponse(
@@ -100,5 +127,5 @@ private fun TaskListFromRemoteResponse.toTaskListResponse(): TaskListResponse = 
 )
 
 private fun TaskRemote.toTask(): Task {
-    return Task(id, title, time, TaskStatus.valueOf(status), image, udzur, need_verification)
+    return Task(id, title, time, TaskStatus.valueOf(status), image, udzur, need_confirmation)
 }

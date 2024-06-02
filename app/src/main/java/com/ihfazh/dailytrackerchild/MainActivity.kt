@@ -4,17 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ihfazh.dailytrackerchild.ui.theme.DailyTrackerChildTheme
 
 class MainActivity : ComponentActivity() {
 
     private val tokenCacheUtil
         get() = (application as DailyTrackerChildApplication).compositionRoot.tokenCacheUtil
+
+    lateinit var activityCompositionRoot: ActivityCompositionRoot
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -25,6 +25,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        activityCompositionRoot = ActivityCompositionRoot(
+            this
+        )
+
 
         savedInstanceState?.run {
             val token = getString("Token")

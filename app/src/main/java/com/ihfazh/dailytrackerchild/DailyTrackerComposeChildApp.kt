@@ -57,6 +57,7 @@ fun DailyTrackerNavHost(
             val textToSpeech = (activity.application as DailyTrackerChildApplication).compositionRoot.textToSpeech
             val profile = childrenCache.getProfile(childId) ?: return@composable Text(text="Children not found")
 
+
             TaskListScreen(
                 viewModel = viewModel(factory = TaskListViewModel.Factory(profile)),
                 onProfileClicked = {
@@ -64,8 +65,7 @@ fun DailyTrackerNavHost(
                 },
                 onTitleClicked = {title ->
                     textToSpeech.speak(title, TextToSpeech.QUEUE_ADD, null)
-
-                }
+                },
             )
         }
 

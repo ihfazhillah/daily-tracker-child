@@ -19,7 +19,7 @@ data class TaskRemote(
     val time: String,
     val image: String? = null,
     val udzur: String? = null,
-    val need_verification: Boolean = false
+    val need_confirmation: Boolean = false
 )
 
 @Serializable

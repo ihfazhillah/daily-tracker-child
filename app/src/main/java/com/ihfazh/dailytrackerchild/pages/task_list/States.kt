@@ -19,3 +19,10 @@ data class Idle(override val profile: ProfileItem, override val dateItem: DateIt
     })
 }
 data class Error(override val profile: ProfileItem, override val dateItem: DateItem, val error: String): BaseState(profile, dateItem)
+data class PickPhoto(
+    override val profile: ProfileItem,
+    override val dateItem: DateItem,
+    val tasks: List<Task>,
+    val selectedTask: Task
+): BaseState(profile, dateItem)
+

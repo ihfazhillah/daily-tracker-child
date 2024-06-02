@@ -7,6 +7,7 @@ import com.ihfazh.dailytrackerchild.fp.Outcome
 import com.ihfazh.dailytrackerchild.fp.OutcomeError
 import com.ihfazh.dailytrackerchild.fp.Success
 import kotlinx.coroutines.delay
+import java.io.File
 
 
 class DummyClient : Client {
@@ -55,6 +56,10 @@ class DummyClient : Client {
         val task = tasks.find { t -> t.id == id } ?: return Outcome.failure(OutcomeError("Task not found"))
 
         return Outcome.success(task.copy(status = statuses.random()))
+    }
+
+    override suspend fun markTaskAsFinished(id: String, file: File): Outcome<Task, OutcomeError> {
+        TODO("Not yet implemented")
     }
 
 }
