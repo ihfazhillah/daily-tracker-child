@@ -27,6 +27,7 @@ fun TaskGroupCard(
     modifier: Modifier = Modifier,
     onSelesai: OnSelesai = {},
     onUdzur: OnUdzur = {},
+    onTitleClick: OnTitleClick = {}
 ){
 
     Column(
@@ -68,7 +69,7 @@ fun TaskGroupCard(
                 .padding(8.dp, 0.dp, 8.dp, 32.dp)
         ) {
             taskGroup.tasks.map{ task ->
-                TaskItem(task = task, onSelesai = onSelesai, onUdzur = onUdzur)
+                TaskItem(task = task, onSelesai = onSelesai, onUdzur = onUdzur, onTitleClick = onTitleClick)
             }
         }
 

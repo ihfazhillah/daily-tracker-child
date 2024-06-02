@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -35,29 +37,31 @@ fun ChildPicker(state: ChildState, modifier: Modifier = Modifier, onChildClicked
 
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
 
         modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
+            .padding(32.dp)
+
 
     ) {
 
-        Text(
-            text = "Kamu Siapa?",
-            style = MaterialTheme.typography.displayLarge
-        )
-        Text(
-            text = "Pilih siapa yang akan menyelesaikan tugas",
-            style = MaterialTheme.typography.titleLarge
-        )
+        Column {
+            Text(
+                text = "Kamu Siapa?",
+                style = MaterialTheme.typography.displayLarge
+            )
+            Text(
+                text = "Pilih siapa yang akan menyelesaikan tugas",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
 
-        Spacer(modifier = Modifier.height(40.dp))
+
 
 
         if (state is Idle){
-            LazyRow {
+            LazyColumn {
                 items(state.profiles){profile ->
                     ProfileCard(
                         profile = profile,
@@ -97,7 +101,7 @@ fun ChildPicker(state: ChildState, modifier: Modifier = Modifier, onChildClicked
 }
 
 
-@Preview(widthDp = 1280, heightDp = 800)
+@Preview(device = "id:pixel")
 @Composable
 fun ChildPickerPreview(){
     val profiles = listOf<ProfileItem>(
@@ -108,5 +112,5 @@ fun ChildPickerPreview(){
         ProfileItem("","Isa", "https://www.shutterstock.com/image-vector/man-faceless-avatar-260nw-1013409094.jpg", 0.4F),
     )
 
-    ChildPicker(Loading)
+    ChildPicker(Idle(profiles))
 }

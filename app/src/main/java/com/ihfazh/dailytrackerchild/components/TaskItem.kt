@@ -1,6 +1,7 @@
 package com.ihfazh.dailytrackerchild.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,9 +38,10 @@ import com.ihfazh.dailytrackerchild.data.TaskStatus
 
 typealias OnSelesai = (Task) -> Unit
 typealias OnUdzur = (Task) -> Unit
+typealias OnTitleClick = (Task) -> Unit
 
 @Composable
-fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {}, onUdzur: OnUdzur = {}){
+fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {}, onUdzur: OnUdzur = {}, onTitleClick: OnTitleClick = {}){
     Row(
         modifier=modifier
             .padding(8.dp)
@@ -66,7 +68,10 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
             Text(
                 text = task.title,
                 style = MaterialTheme.typography.titleLarge,
-                textDecoration = textDecoration
+                textDecoration = textDecoration,
+                modifier = Modifier.clickable {
+                    onTitleClick.invoke(task)
+                }
             )
 
             if (task.status == TaskStatus.todo){

@@ -13,8 +13,25 @@ import com.ihfazh.dailytrackerchild.ui.theme.DailyTrackerChildTheme
 
 class MainActivity : ComponentActivity() {
 
+    private val tokenCacheUtil
+        get() = (application as DailyTrackerChildApplication).compositionRoot.tokenCacheUtil
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val token = tokenCacheUtil.getToken()
+        outState.putString("Token", token)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        savedInstanceState?.run {
+            val token = getString("Token")
+            if (token != null){
+                tokenCacheUtil.saveToken(token)
+            }
+        }
 
         setContent {
             DailyTrackerChildTheme {
@@ -22,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp)
+//                        .padding(24.dp)
                     ,
                     color = MaterialTheme.colorScheme.background
                 ) {

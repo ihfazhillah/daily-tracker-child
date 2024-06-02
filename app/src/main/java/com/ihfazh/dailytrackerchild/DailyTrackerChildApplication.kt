@@ -8,4 +8,5 @@ class DailyTrackerChildApplication: Application() {
         super.onCreate()
         compositionRoot = ActivityCompositionRoot(this)
     }
+
 }

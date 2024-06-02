@@ -3,6 +3,7 @@ package com.ihfazh.dailytrackerchild.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -36,13 +37,13 @@ typealias OnProfileClicked = (profile: ProfileItem) -> Unit
 @Composable
 fun ProfileCard(profile: ProfileItem, modifier: Modifier = Modifier, onProfileClicked: OnProfileClicked = {}){
     val child = Child(profile.avatarUrl, profile.name)
-    Card(modifier = modifier.clickable { onProfileClicked.invoke(profile) }){
+    Card(modifier = modifier.fillMaxWidth().clickable { onProfileClicked.invoke(profile) }){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(12.dp)
         ) {
-            Avatar(child, 100.dp)
+            Avatar(child, width = 100.dp)
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text=profile.name,

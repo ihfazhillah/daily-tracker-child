@@ -100,5 +100,5 @@ private fun TaskListFromRemoteResponse.toTaskListResponse(): TaskListResponse = 
 )
 
 private fun TaskRemote.toTask(): Task {
-    return Task(id, title, time, TaskStatus.valueOf(status), image)
+    return Task(id, title, time, TaskStatus.valueOf(status), image, udzur, need_verification)
 }

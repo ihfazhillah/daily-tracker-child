@@ -1,6 +1,7 @@
 package com.ihfazh.dailytrackerchild.pages.task_list
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,10 +30,11 @@ import com.ihfazh.dailytrackerchild.components.Child
 import com.ihfazh.dailytrackerchild.components.CircleProgress
 import com.ihfazh.dailytrackerchild.components.DateItem
 import com.ihfazh.dailytrackerchild.components.HijriDateItem
+import com.ihfazh.dailytrackerchild.components.OnSelesai
+import com.ihfazh.dailytrackerchild.components.OnUdzur
 import com.ihfazh.dailytrackerchild.components.ProfileItem
 import com.ihfazh.dailytrackerchild.components.TaskGroupCard
 import com.ihfazh.dailytrackerchild.components.VisibilityToggle
-import com.ihfazh.dailytrackerchild.components.onTaskFinish
 import com.ihfazh.dailytrackerchild.components.onTitleClick
 import com.ihfazh.dailytrackerchild.data.Task
 import com.ihfazh.dailytrackerchild.data.TaskGroup
@@ -46,7 +48,8 @@ private fun ProfileItem.toChild(): Child = Child(avatarUrl, name)
 fun TaskList(
     state: BaseState,
     modifier: Modifier = Modifier,
-    onTaskFinish: onTaskFinish = {},
+    onTaskFinish: OnSelesai = {},
+    onUdzur: OnUdzur = {},
     onRetryClicked: OnRetryClicked = {},
     onProfileClicked: () -> Unit,
     onTitleClick: onTitleClick,
@@ -56,7 +59,7 @@ fun TaskList(
 ){
 
     val finishedVisible = remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
 
@@ -88,23 +91,27 @@ fun TaskList(
 
     Column(
         modifier = modifier
+            .fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Column (verticalArrangement = Arrangement.spacedBy(16.dp)){
 
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Avatar(child = state.profile.toChild())
+                    Avatar(
+                        child = state.profile.toChild(),
+                        modifier = Modifier.clickable {
+                            onProfileClicked.invoke()
+                        }
+                    )
 
+                    Text(text = "Assalamualaikum, ${state.profile.name}!", style = MaterialTheme.typography.displaySmall)
 
-                    Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "${date.hijriDateItem.date} ${date.hijriDateItem.month} ${date.hijriDateItem.year}", style = MaterialTheme.typography.titleLarge)
-                        Text(text = date.georgianDateString)
-                    }
 
                     if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
                         Row(
@@ -117,14 +124,20 @@ fun TaskList(
 
                 }
 
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = "${date.hijriDateItem.date} ${date.hijriDateItem.month} ${date.hijriDateItem.year}", style = MaterialTheme.typography.titleLarge)
+                    Text(text = date.georgianDateString)
+                }
 
-                Text(text = "Assalamualaikum, ${state.profile.name}!", style = MaterialTheme.typography.displaySmall)
+
 
 
             }
 
             if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM){
-                CircleProgress(progress = progress)
+                Row (Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
+                    CircleProgress(progress = progress)
+                }
             }
 
 
@@ -184,7 +197,12 @@ fun TaskList(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ){
                     taskGroups.map{
-                        TaskGroupCard(taskGroup = it)
+                        TaskGroupCard(
+                            taskGroup = it,
+                            onTitleClick = {task -> onTitleClick.invoke(task.title)},
+                            onSelesai = onTaskFinish,
+                            onUdzur = onUdzur
+                        )
                     }
 
                 }
@@ -199,7 +217,7 @@ fun TaskList(
 }
 
 
-@Preview(device = "spec:parent=Nexus 7")
+@Preview(device = "spec:id=reference_desktop,shape=Normal,width=1920,height=1080,unit=dp,dpi=160")
 @Composable
 fun TaskListPreview(){
     val tasks = listOf<Task>(

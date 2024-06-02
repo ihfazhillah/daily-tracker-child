@@ -1,8 +1,10 @@
 package com.ihfazh.dailytrackerchild.pages.task_list
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun TaskListScreen(
@@ -16,9 +18,9 @@ fun TaskListScreen(
 
     TaskList(
         state = state.value,
-        modifier = modifier,
+        modifier = modifier.padding(32.dp),
         onRetryClicked = {viewModel.getTaskList()},
-        onTaskFinish = {viewModel.markTaskAsFinished(it)},
+        onTaskFinish = {viewModel.markTaskAsFinished(it.id)},
         onProfileClicked = onProfileClicked,
         onTitleClick = onTitleClicked
     )

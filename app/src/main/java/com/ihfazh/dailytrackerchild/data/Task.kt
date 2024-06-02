@@ -9,5 +9,6 @@ data class Task(
     val time: String,
     val status: TaskStatus,
     val image: String? = null,
-    val udzur: String? = null
+    val udzur: String? = null,
+    val need_verification: Boolean = false,
 )

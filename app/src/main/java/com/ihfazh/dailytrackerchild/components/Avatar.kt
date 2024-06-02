@@ -18,11 +18,11 @@ data class Child(
 )
 
 @Composable
-fun Avatar(child: Child, width: Dp = 80.dp){
+fun Avatar(child: Child, modifier: Modifier = Modifier, width: Dp = 80.dp){
     AsyncImage(
         model = child.avatarUrl,
         contentDescription = null,
-        modifier = Modifier
+        modifier = modifier
             .height(width)
             .width(width)
             .clip(CircleShape)

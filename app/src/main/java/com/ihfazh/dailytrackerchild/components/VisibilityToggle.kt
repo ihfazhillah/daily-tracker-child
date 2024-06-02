@@ -18,9 +18,9 @@ import com.ihfazh.dailytrackerchild.R
 fun VisibilityToggle(visible: Boolean, onToggle: () -> Unit){
 
     val text = if (visible){
-        "Sembunyikan Task Selesai"
+        "Sembunyikan Tugas Selesai"
     } else {
-        "Tampilkan Task Selesai"
+        "Tampilkan Tugas Selesai"
     }
 
     val resourceId = if (visible){
