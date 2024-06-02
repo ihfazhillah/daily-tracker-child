@@ -120,6 +120,20 @@ class ActualClient(
             Outcome.failure(OutcomeError(e.stackTraceToString()))
         }
     }
+
+    override suspend fun markTaskAsUdzur(id: String, reason: String): Outcome<Task, OutcomeError> {
+        val url = "$baseUrl$childrenTaskBase/mark-as-udzur/"
+        val response = httpClient.post(url){
+            contentType(ContentType.Application.Json)
+            setBody(MarkAsUdzurBody(id, reason))
+        }
+        return try {
+            Outcome.success(response.body<MarkAsFinishedResponse>().task.toTask())
+        } catch (e: Exception){
+            println(e.stackTraceToString())
+            Outcome.failure(OutcomeError(e.stackTraceToString()))
+        }
+    }
 }
 
 private fun TaskListFromRemoteResponse.toTaskListResponse(): TaskListResponse = TaskListResponse(

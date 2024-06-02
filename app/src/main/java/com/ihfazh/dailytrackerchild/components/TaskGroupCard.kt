@@ -26,7 +26,7 @@ fun TaskGroupCard(
     taskGroup: TaskGroup,
     modifier: Modifier = Modifier,
     onSelesai: OnSelesai = {},
-    onUdzur: OnUdzur = {},
+    onUdzur: OnUdzur = {_, _ ->},
     onTitleClick: OnTitleClick = {}
 ){
 

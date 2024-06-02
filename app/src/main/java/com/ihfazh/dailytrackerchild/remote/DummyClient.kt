@@ -62,4 +62,8 @@ class DummyClient : Client {
         TODO("Not yet implemented")
     }
 
+    override suspend fun markTaskAsUdzur(id: String, reason: String): Outcome<Task, OutcomeError> {
+        TODO("Not yet implemented")
+    }
+
 }

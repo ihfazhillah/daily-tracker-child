@@ -101,6 +101,24 @@ class TaskListViewModel(
         }
     }
 
+    fun markTaskAsUdzur(id: String, udzur: String){
+        if (state.value !is Idle){
+            return
+        }
+
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.value = (state.value as Idle).updateTaskStatusById(id, TaskStatus.processing)
+
+            val response = client.markTaskAsUdzur(id, udzur)
+
+            _state.value = when(response){
+                is Failure -> (state.value as Idle).updateTaskStatusById(id, TaskStatus.error)
+                is Success -> (state.value as Idle).updateTaskStatusById(response.value.id, response.value.status, response.value.udzur)
+            }
+        }
+    }
+
     init {
         getTaskList()
     }

@@ -51,6 +51,7 @@ fun TaskListScreen(
                     viewModel.markTaskAsFinished(task.id)
                 }
             },
+            onUdzur = {task, reason -> viewModel.markTaskAsUdzur(task.id, reason)},
             onProfileClicked = onProfileClicked,
             onTitleClick = onTitleClicked
         )

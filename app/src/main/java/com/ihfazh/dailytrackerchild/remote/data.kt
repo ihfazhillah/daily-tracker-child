@@ -31,6 +31,8 @@ data class TaskListFromRemoteResponse(val tasks: List<TaskRemote>)
 
 @Serializable
 data class MarkAsFinishedBody(val task_id: String)
+@Serializable
+data class MarkAsUdzurBody(val task_id: String, val udzur_reason: String)
 
 @Serializable
 data class MarkAsFinishedResponse(val task: TaskRemote)

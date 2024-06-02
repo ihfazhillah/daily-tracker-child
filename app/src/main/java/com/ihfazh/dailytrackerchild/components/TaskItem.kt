@@ -20,28 +20,34 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ihfazh.dailytrackerchild.R
 import com.ihfazh.dailytrackerchild.data.Task
 import com.ihfazh.dailytrackerchild.data.TaskStatus
 
 
 typealias OnSelesai = (Task) -> Unit
-typealias OnUdzur = (Task) -> Unit
+typealias OnUdzur = (Task, String) -> Unit
 typealias OnTitleClick = (Task) -> Unit
 
 @Composable
-fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {}, onUdzur: OnUdzur = {}, onTitleClick: OnTitleClick = {}){
+fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {}, onUdzur: OnUdzur = {_, _ ->}, onTitleClick: OnTitleClick = {}){
     Row(
         modifier=modifier
             .padding(8.dp)
@@ -76,24 +82,7 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
 
             if (task.status == TaskStatus.todo){
 
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-
-                    Button(onClick = {
-                        onSelesai.invoke(task)
-                    }) {
-                        Icon(Icons.Default.Check, "Done")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Selesai")
-                    }
-
-                    OutlinedButton(onClick = {
-                        onUdzur.invoke(task)
-                    }) {
-                        Icon(Icons.Default.Warning, "Udzur")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Udzur")
-                    }
-                }
+                TaskAction(onSelesai, task, onUdzur)
 
             }
 
@@ -147,7 +136,7 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(4.dp))
-                        .background(Color(204, 514, 0))
+                        .background(Color(204, 54, 0))
                         .padding(8.dp),
 
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -210,24 +199,7 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
                     }
 
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-
-                        Button(onClick = {
-                            onSelesai.invoke(task)
-                        }) {
-                            Icon(Icons.Default.Check, "Done")
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = "Selesai")
-                        }
-
-                        OutlinedButton(onClick = {
-                            onUdzur.invoke(task)
-                        }) {
-                            Icon(Icons.Default.Warning, "Udzur")
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = "Udzur")
-                        }
-                    }
+                    TaskAction(onSelesai, task, onUdzur)
                 }
 
             }
@@ -238,15 +210,79 @@ fun TaskItem(task: Task, modifier: Modifier = Modifier, onSelesai: OnSelesai = {
     }
 }
 
+@Composable
+private fun TaskAction(
+    onSelesai: OnSelesai,
+    task: Task,
+    onUdzur: OnUdzur
+) {
+
+    val udzurReasonInputDisplay = remember {
+        mutableStateOf(false)
+    }
+    val udzurReasonValue = remember {
+        mutableStateOf("")
+    }
+
+
+    if (udzurReasonInputDisplay.value){
+        Column {
+            TextField(value = udzurReasonValue.value, onValueChange = {
+                udzurReasonValue.value = it
+            },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                ,
+                placeholder = {
+                              Text(text = "Tuliskan alasan udzur kamu")
+                },
+                trailingIcon = {
+                    IconButton(onClick = {
+                        onUdzur.invoke(task, udzurReasonValue.value)
+                    }) {
+                        Icon(painter = painterResource(id = R.drawable.send), contentDescription = "send")
+                    }
+
+                }
+            )
+
+        }
+
+
+
+    } else {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = {
+                onSelesai.invoke(task)
+            }) {
+                Icon(Icons.Default.Check, "Done")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Selesai")
+            }
+
+            OutlinedButton(onClick = {
+                udzurReasonInputDisplay.value = true
+            }) {
+                Icon(Icons.Default.Warning, "Udzur")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Udzur")
+            }
+        }
+
+    }
+
+}
+
 
 @Preview(device = "id:pixel_3")
 @Composable
 fun TaskItemPreview(){
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-//        TaskItem(task = Task("1", "Sholat Subuh", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
+        TaskItem(task = Task("1", "Sholat Subuh", "100", TaskStatus.todo, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
 //        TaskItem(task = Task("2", "Dzikir Pagi", TaskStatus.pending, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
 //        TaskItem(task = Task("3", "Murojaah Al Quran", TaskStatus.finished, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png"))
-//        TaskItem(task = Task("4", "PR Khot", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali."))
+        TaskItem(task = Task("4", "PR Khot", "1", TaskStatus.udzur, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png", "Sedang pusing sekali."))
 //        TaskItem(task = Task("6", "Sarapan", TaskStatus.processing, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
 //        TaskItem(task = Task("6", "Error", TaskStatus.error, "https://cms.ksatriamuslim.com/media/sholat_rL2kmdq.png" ))
     }

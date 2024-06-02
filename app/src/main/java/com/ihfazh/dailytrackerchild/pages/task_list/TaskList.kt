@@ -49,7 +49,7 @@ fun TaskList(
     state: BaseState,
     modifier: Modifier = Modifier,
     onTaskFinish: OnSelesai = {},
-    onUdzur: OnUdzur = {},
+    onUdzur: OnUdzur = {_, _ ->},
     onRetryClicked: OnRetryClicked = {},
     onProfileClicked: () -> Unit,
     onTitleClick: onTitleClick,
@@ -66,7 +66,10 @@ fun TaskList(
     val date = state.dateItem
 
     val progress = if (state is Idle) {
-        state.tasks.filter { it.status === TaskStatus.finished}.size.toFloat() / state.tasks.size
+        state.tasks.filter { it.status in listOf(
+            TaskStatus.finished,
+            TaskStatus.udzur
+        ) }.size.toFloat() / state.tasks.size
     } else {
         state.profile.progress
     }

@@ -12,4 +12,5 @@ interface Client {
 
     suspend fun markTaskAsFinished(id: String): Outcome<Task, OutcomeError>
     suspend fun markTaskAsFinished(id: String, file: File): Outcome<Task, OutcomeError>
+    suspend fun markTaskAsUdzur(id: String, reason: String): Outcome<Task, OutcomeError>
 }
