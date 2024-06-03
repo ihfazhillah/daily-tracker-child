@@ -2,11 +2,14 @@ package com.ihfazh.dailytrackerchild.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +37,11 @@ fun TaskGroupCard(
         modifier= modifier
             .shadow(2.dp, RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.background)
-            .border(1.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+            .border(
+                1.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(8.dp)
+            )
         ,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -66,6 +73,7 @@ fun TaskGroupCard(
 
         Column(
             modifier = Modifier
+//                .verticalScroll(rememberScrollState())
                 .padding(8.dp, 0.dp, 8.dp, 32.dp)
         ) {
             taskGroup.tasks.map{ task ->

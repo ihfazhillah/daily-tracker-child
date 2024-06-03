@@ -3,6 +3,7 @@ package com.ihfazh.dailytrackerchild.pages.task_list
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -106,24 +109,33 @@ fun TaskList(
             Column (verticalArrangement = Arrangement.spacedBy(16.dp)){
 
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Avatar(
-                        child = state.profile.toChild(),
-                        modifier = Modifier.clickable {
-                            onProfileClicked.invoke()
+                    if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
+                        Box(
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Avatar(
+                                child = state.profile.toChild(),
+                                modifier = Modifier.clickable {
+                                    onProfileClicked.invoke()
+                                }
+                            )
+                            CircleProgress(progress = progress, diameter = 80.dp)
                         }
-                    )
+                    } else {
+
+                        Avatar(
+                            child = state.profile.toChild(),
+                            modifier = Modifier.clickable {
+                                onProfileClicked.invoke()
+                            }
+                        )
+
+
+                    }
 
                     Text(text = "Assalamualaikum, ${state.profile.name}!", style = MaterialTheme.typography.displaySmall)
 
 
-                    if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            CircleProgress(progress = progress, diameter = 80.dp)
-                        }
-                    }
 
                 }
 
@@ -196,6 +208,7 @@ fun TaskList(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(16.dp, 0.dp, 16.dp, 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ){
