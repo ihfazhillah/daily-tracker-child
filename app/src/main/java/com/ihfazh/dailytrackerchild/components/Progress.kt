@@ -67,7 +67,7 @@ fun CircleProgress(progress: Float, modifier: Modifier = Modifier, diameter: Dp 
         contentAlignment = Alignment.Center
     ){
         CircularProgressIndicator(
-            progress = progress,
+            progress = { progress },
             color = MaterialTheme.colorScheme.primary,
             trackColor = Color.LightGray,
             strokeWidth = 8.dp,

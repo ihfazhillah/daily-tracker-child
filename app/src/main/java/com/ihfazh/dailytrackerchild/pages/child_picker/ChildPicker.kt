@@ -2,6 +2,7 @@ package com.ihfazh.dailytrackerchild.pages.child_picker
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,6 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
@@ -30,6 +35,7 @@ import com.ihfazh.dailytrackerchild.components.ErrorMessage
 import com.ihfazh.dailytrackerchild.components.OnProfileClicked
 import com.ihfazh.dailytrackerchild.components.ProfileCard
 import com.ihfazh.dailytrackerchild.components.ProfileItem
+import com.ihfazh.dailytrackerchild.components.ProfileWithProgress
 
 
 @Composable
@@ -37,7 +43,7 @@ fun ChildPicker(state: ChildState, modifier: Modifier = Modifier, onChildClicked
 
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp),
 
         modifier = modifier
             .fillMaxSize()
@@ -61,12 +67,10 @@ fun ChildPicker(state: ChildState, modifier: Modifier = Modifier, onChildClicked
 
 
         if (state is Idle){
-            LazyColumn {
+            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 items(state.profiles){profile ->
-                    ProfileCard(
+                    ProfileWithProgress(
                         profile = profile,
-                        modifier = Modifier
-                            .padding(16.dp),
                         onProfileClicked = onChildClicked
                     )
                 }
