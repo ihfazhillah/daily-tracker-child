@@ -93,7 +93,10 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.camera.view)
+    // camera library
     implementation(libs.camposer)
+    // image compressor
+    implementation(libs.compressor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

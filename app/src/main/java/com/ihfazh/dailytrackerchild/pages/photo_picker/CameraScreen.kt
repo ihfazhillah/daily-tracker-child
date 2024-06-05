@@ -2,6 +2,8 @@ package com.ihfazh.dailytrackerchild.pages.photo_picker
 
 import android.Manifest
 import android.content.Context
+import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +36,9 @@ import com.ujizin.camposer.CameraPreview
 import com.ujizin.camposer.state.CamSelector
 import com.ujizin.camposer.state.rememberCamSelector
 import com.ujizin.camposer.state.rememberCameraState
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -63,6 +69,8 @@ fun CameraView(modifier: Modifier = Modifier, onPhotoSelected: (File) -> Unit = 
         )
     }
 
+    val coroutineScope = rememberCoroutineScope()
+
     val state = remember{
         mutableStateOf("ambilFoto")
     }
@@ -80,8 +88,19 @@ fun CameraView(modifier: Modifier = Modifier, onPhotoSelected: (File) -> Unit = 
                 Button(onClick = {
 
                     cameraState.takePicture(file.value){
+                        Log.d("CameraView", "old size: ${file.value.length()}")
+                        coroutineScope.launch {
+                            val updatedFile = Compressor.compress(context, file.value){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    default(format = Bitmap.CompressFormat.WEBP_LOSSY)
+                                } else {
+                                    default(format = Bitmap.CompressFormat.WEBP)
+                                }
+                            }
+                            file.value = updatedFile
+                            Log.d("CameraView", "new size: ${updatedFile.length()}")
+                        }
                         state.value = "Hello world"
-                        Log.d("HAHAH", "CameraView: ${it}")
                     }
 
                 }) {
