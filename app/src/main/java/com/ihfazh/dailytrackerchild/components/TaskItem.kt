@@ -218,7 +218,7 @@ private fun TaskAction(
 ) {
 
     val udzurReasonInputDisplay = remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
     val udzurReasonValue = remember {
         mutableStateOf("")
@@ -240,7 +240,7 @@ private fun TaskAction(
                     IconButton(onClick = {
                         onUdzur.invoke(task, udzurReasonValue.value)
                     },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(4.dp)
                         ) {
                         Icon(painter = painterResource(id = R.drawable.send), contentDescription = "send")
                     }
@@ -251,7 +251,7 @@ private fun TaskAction(
                         udzurReasonValue.value = ""
                         udzurReasonInputDisplay.value = false
                     },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(4.dp)
                         ) {
                         Icon(Icons.Default.Close, contentDescription = "close")
                     }
